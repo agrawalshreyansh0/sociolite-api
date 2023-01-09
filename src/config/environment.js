@@ -3,7 +3,8 @@ const development = {
     name: 'development',
     db: 'Sociolitedb',
     mongodb_password: 'e50cf28',
-    jwt_key: 'sociolite'
+    jwt_key: 'sociolite',
+    bcrypt_salt:'7'
 
 }
 

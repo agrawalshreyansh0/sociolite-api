@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken')
 const env = require('../config/environment');
+const bcrypt = require('bcrypt');
 
 module.exports.createUser = async (req, res) => {
     try {
@@ -9,7 +10,9 @@ module.exports.createUser = async (req, res) => {
             console.log(`${req.body.email}: user already exists`);
             return res.json({ success: false, message: "user already exists" });
         } else {
-            await User.create(req.body);
+            const password = req.body.password;
+            const hashedPassword = await bcrypt.hash(password, env.bcrypt_salt);
+            await User.create({ email: req.body.email, password: hashedPassword, name: req.body.name });
             console.log(`new user created :${req.body.email}`);
             return res.json({ success: true, message: "new user created" });
         }
@@ -26,7 +29,7 @@ module.exports.signIn = async (req, res) => {
             console.log(`user not found`);
             return res.json({ success: false, message: `user not found` });
         }
-        if (user.password != req.body.password) {
+        if (!await bcrypt.compare(req.body.password, user.password)) {
             console.log(`Incorrect password :${req.body.email}`);
             return res.json({ success: false, message: `Incorrect Password` });
         }
