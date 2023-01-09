@@ -18,3 +18,16 @@ module.exports.createComment = async (req, res) => {
         return res.json({ success: false, message: "Error Detected" });
     }
 }
+
+module.exports.destroy = async (req, res) => {
+    try {
+        let currComment = await Comment.findById(req.params.id);
+        await Post.findByIdAndUpdate(currComment.post, { $pull: { comments: req.params.id } });
+        currComment.remove();
+        console.log(`Deleted the post`);
+        return res.json({ success: true, message: "Deleted the post successfully" });
+    } catch (error) {
+        console.log(`Error Detected`);
+        return res.json({ success: false, message: "Error Detected" });
+    }
+}
