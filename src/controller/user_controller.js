@@ -51,5 +51,4 @@ module.exports.getUser = async (req, res) => {
         console.log(`error : `, error);
         return res.json({ success: false, message: `Some Error Detected` });
     }
-
 }
