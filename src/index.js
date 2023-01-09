@@ -12,7 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(passport.initialize()); 
 
-app.use('/auth', require('./routers/user_router'))
+app.use('/auth', require('./routers/user_router')); 
+app.use('/posts', require('./routers/post_router')); 
 
 app.listen(PORT, () => {
     console.log(`Server live at port : ${PORT}`)
