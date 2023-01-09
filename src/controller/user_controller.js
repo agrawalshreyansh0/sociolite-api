@@ -34,7 +34,7 @@ module.exports.signIn = async (req, res) => {
             return res.json({ success: false, message: `Incorrect Password` });
         }
         console.log(`SignIn Successful :${req.body.email}`);
-        return res.json({ success: true, data: { token: jwt.sign(user.toJSON(), env.jwt_key, { expiresIn: '10000000' }) } });
+        return res.json({ success: true, data: { token: jwt.sign(user.toJSON(), env.jwt_key, { expiresIn: env.jwt_expiry }) } });
 
     } catch (error) {
         console.log(`error : `, error);

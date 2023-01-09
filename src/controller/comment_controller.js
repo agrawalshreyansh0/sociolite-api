@@ -14,7 +14,7 @@ module.exports.createComment = async (req, res) => {
         console.log(`comment on ${req.body.post} by ${req.body.user}`);
         return res.json({ success: true, message: "comment successfully added" });
     } catch (err) {
-        console.log(`Error Detected`);
+        console.log(`error : `, err);
         return res.json({ success: false, message: "Error Detected" });
     }
 }
@@ -27,7 +27,7 @@ module.exports.destroy = async (req, res) => {
         console.log(`Deleted the post`);
         return res.json({ success: true, message: "Deleted the post successfully" });
     } catch (error) {
-        console.log(`Error Detected`);
+        console.log(`error : `, error);
         return res.json({ success: false, message: "Error Detected" });
     }
 }

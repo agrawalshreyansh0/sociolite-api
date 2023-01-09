@@ -4,7 +4,8 @@ const development = {
     db: 'Sociolitedb',
     mongodb_password: 'e50cf28',
     jwt_key: 'sociolite',
-    bcrypt_salt:'7'
+    bcrypt_salt: '7',
+    jwt_expiry:'10000000'
 
 }
 
