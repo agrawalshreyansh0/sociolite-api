@@ -15,7 +15,9 @@ app.use('/auth', require('./routers/user_router'));
 app.use('/posts', require('./routers/post_router'));
 app.use('/comments', require('./routers/comment_router'));
 app.use('/likes', require('./routers/like_router'));
-app.use
+app.use('/', (req, res) => {
+    res.json('Hey welcome to Sociolite'); 
+}); 
 
 app.listen(env.PORT, () => {
     console.log(`Server live at port : ${env.PORT}`)
