@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const Like = require('../models/like');
 
 module.exports.createPost = async (req, res) => {
     try {
@@ -14,7 +15,7 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find({}).populate('user').exec();
+        const posts = await Post.find({}).populate('user').populate({ path: 'comments', populate: { path: 'user' }, populate: { path: 'likes' } }).populate('likes').exec();
         console.log(`got all posts`);
         return res.json({ success: true, posts });
     } catch (error) {
@@ -26,9 +27,14 @@ module.exports.getAllPosts = async (req, res) => {
 module.exports.destroy = async (req, res) => {
     try {
         const reqpost = await Post.findById(req.params.id);
+        await Like.deleteMany({ likable: reqpost, onModel: 'post' }); 
+        // major issue to delete all the likes of the comments on a post
+        // console.log(reqpost.comments); 
+        // const dellikes = await Like.deleteMany({ _id: { $in: reqpost.comments } });
+        // console.log(dellikes); 
         await Comment.deleteMany({ post: req.params.id });
-        reqpost.remove();
-        console.log(`Post Delelted with all the comments`);
+        await reqpost.remove();
+        console.log(`Post Delelted with all the comments and likes`);
         return res.json({ success: true, message: "Post Deleted Successfully" });
     } catch (err) {
         console.log(`error : `, err);
