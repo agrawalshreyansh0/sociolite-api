@@ -5,7 +5,6 @@ const db = require('./config/mongoose');
 const passport = require('passport')
 const passportJWT = require('./config/passport-jwt-strategy');
 const bodyParser = require('body-parser');
-const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -17,6 +16,6 @@ app.use('/posts', require('./routers/post_router'));
 app.use('/comments', require('./routers/comment_router'));
 app.use('/likes', require('./routers/like_router'));
 
-app.listen(PORT, () => {
-    console.log(`Server live at port : ${PORT}`)
+app.listen(env.PORT, () => {
+    console.log(`Server live at port : ${env.PORT}`)
 })
