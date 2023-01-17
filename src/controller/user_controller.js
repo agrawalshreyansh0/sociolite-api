@@ -54,4 +54,15 @@ module.exports.getUser = async (req, res) => {
         console.log(`error : `, error);
         return res.json({ success: false, message: `Some Error Detected` });
     }
+} 
+
+module.exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({}); 
+        console.log(`All Users`); 
+        return res.json({success:true,data:users}); 
+    } catch (error) {
+        console.log(error); 
+        return res.json({ success: false, message: "Error Detected" }); 
+    }
 }

@@ -11,6 +11,11 @@ const likeSchema = mongoose.Schema({
     onModel: {
         type: String,
         required: true, enum: ['post', 'comment']
+    },
+    postId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        required: true, 
+        ref:'post'
     }
 }, {
     timestamps: true

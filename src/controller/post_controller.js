@@ -27,11 +27,7 @@ module.exports.getAllPosts = async (req, res) => {
 module.exports.destroy = async (req, res) => {
     try {
         const reqpost = await Post.findById(req.params.id);
-        await Like.deleteMany({ likable: reqpost, onModel: 'post' }); 
-        // major issue to delete all the likes of the comments on a post
-        // console.log(reqpost.comments); 
-        // const dellikes = await Like.deleteMany({ _id: { $in: reqpost.comments } });
-        // console.log(dellikes); 
+        await Like.deleteMany({ postId: req.params.id });
         await Comment.deleteMany({ post: req.params.id });
         await reqpost.remove();
         console.log(`Post Delelted with all the comments and likes`);
@@ -41,3 +37,4 @@ module.exports.destroy = async (req, res) => {
         return res.json({ success: false, message: "Error Detected" });
     }
 }
+
