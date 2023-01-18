@@ -15,7 +15,10 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find({}).populate('user').populate({ path: 'comments', populate: { path: 'user' }, populate: { path: 'likes' } }).populate('likes').exec();
+        const posts = await Post.find({})
+            .populate('user')
+            .populate({ path: 'comments', populate: {  path: 'user' } })
+            .exec();
         console.log(`got all posts`);
         return res.json({ success: true, posts });
     } catch (error) {
