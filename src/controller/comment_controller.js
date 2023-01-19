@@ -11,6 +11,7 @@ module.exports.createComment = async (req, res) => {
         }
         let newcomment = await Comment.create(req.body);
         foundpost.comments.push(newcomment);
+        foundpost.commentsCount++; 
         foundpost.save();
         console.log(`comment on ${req.body.post} by ${req.body.user}`);
         return res.json({ success: true, message: "comment successfully added" });
@@ -23,7 +24,9 @@ module.exports.createComment = async (req, res) => {
 module.exports.destroy = async (req, res) => {
     try {
         let currComment = await Comment.findById(req.params.id);
-        await Post.findByIdAndUpdate(currComment.post, { $pull: { comments: req.params.id } });
+        let currentPost = await Post.findByIdAndUpdate(currComment.post, { $pull: { comments: req.params.id } });
+        currentPost.commentsCount--; 
+        currentPost.save(); 
         await Like.deleteMany({ likable: currComment._id, onModel: 'comment' });
         currComment.remove();
         console.log(`Deleted the post`);

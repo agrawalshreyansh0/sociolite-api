@@ -9,6 +9,14 @@ const postsSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
+    commentsCount: {
+        type: Number,
+        default: 0,
+    },
+    likesCount: {
+        type: Number,
+        default: 0,
+    },
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,

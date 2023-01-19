@@ -28,6 +28,7 @@ module.exports.toogleLike = async (req, res) => {
         if (existingLike) {
             // remove the existing like
             likable.likes.pull(existingLike._id);
+            likable.likesCount--;
             likable.save();
             existingLike.remove();
             deleted = true;
@@ -36,11 +37,12 @@ module.exports.toogleLike = async (req, res) => {
             let newLike = await Like.create({
                 user: req.body.user,
                 likable: req.body.id,
-                onModel: req.body.type, 
-                postId: req.body.postId, 
+                onModel: req.body.type,
+                postId: req.body.postId,
 
             });
             likable.likes.push(newLike._id);
+            likable.likesCount++;
             likable.save();
         }
         console.log(`toggled a like`);
