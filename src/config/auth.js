@@ -7,8 +7,6 @@ const auth = async (req, res, next) => {
     console.log("auth tapped"); 
 
     try {
-
-
         const token = req.header("authToken");
         if (!token) return res.json({ success: false, message: "No auth token found, access denied" });
 
@@ -19,6 +17,7 @@ const auth = async (req, res, next) => {
         if (!user) return res.json({ success: false, message: "User not found" });
 
         req.user = verified.id;
+        console.log(req.user); 
         req.token = token;
 
         next();
