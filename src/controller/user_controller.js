@@ -48,7 +48,7 @@ module.exports.getUserData = async (req, res) => {
     console.log("get user data tapped"); 
 
     try {
-        const founduser = User.findById(req.user);
+        const founduser = await User.findById(req.user);
 
         //remove after testing.................................................................................................
         if (!founduser) return res.json({ success: false, message: "Check for error in backend" });
