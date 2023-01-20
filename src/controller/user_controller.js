@@ -61,6 +61,11 @@ module.exports.getUserData = async (req, res) => {
     }
 }
 
+module.exports.validateToken = async (req, res) => {
+    console.log("verified"); 
+    return res.json({ success: true }); 
+}
+
 
 //Extras for testing
 module.exports.getUser = async (req, res) => {

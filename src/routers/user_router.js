@@ -7,6 +7,7 @@ const auth = require('../config/auth');
 router.post('/signIn', userController.signIn);
 router.post('/createUser', userController.createUser);
 router.get('/getUserData', auth, userController.getUserData);
+router.get('/validateToken', auth, userController.validateToken); 
 
 //extras for dev use
 router.get('/getUser/:email', passport.authenticate(`jwt`, { session: false }), userController.getUser);
