@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const env = require("./environment");
 const User = require("../models/user");
 
-module.exports.auth = async (req, res, next) => {
+const auth = async (req, res, next) => {
 
     console.log("auth tapped"); 
 
@@ -28,4 +28,4 @@ module.exports.auth = async (req, res, next) => {
     }
 }
 
-
+module.exports = auth; 
