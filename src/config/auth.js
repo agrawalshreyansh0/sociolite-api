@@ -3,7 +3,12 @@ const env = require("./environment");
 const User = require("../models/user");
 
 module.exports.auth = async (req, res, next) => {
+
+    console.log("auth tapped"); 
+
     try {
+
+
         const token = req.header("authToken");
         if (!token) return res.json({ success: false, message: "No auth token found, access denied" });
 

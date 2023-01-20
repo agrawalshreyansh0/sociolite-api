@@ -45,6 +45,8 @@ module.exports.signIn = async (req, res) => {
 }
 
 module.exports.getUserData = async (req, res) => {
+    console.log("get user data tapped"); 
+
     try {
         const founduser = User.findById(req.user);
 
