@@ -45,19 +45,12 @@ module.exports.signIn = async (req, res) => {
 }
 
 module.exports.getUserData = async (req, res) => {
-    console.log("get user data tapped"); 
-
     try {
         const founduser = await User.findById(req.user);
-
-        //remove after testing.................................................................................................
-        if (!founduser) return res.json({ success: false, message: "Check for error in backend" });
-
-
         return res.json({ success: true, data: founduser });
     } catch (error) {
         console.log(`error : `, error);
-        return res.json({ success: false, message: `Some Error Detected` });
+        return res.json({ success: false, message: `Some Error Detected` })
     }
 }
 
@@ -65,7 +58,6 @@ module.exports.validateToken = async (req, res) => {
     console.log("verified"); 
     return res.json({ success: true }); 
 }
-
 
 //Extras for testing
 module.exports.getUser = async (req, res) => {
