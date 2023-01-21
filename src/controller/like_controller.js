@@ -8,7 +8,7 @@ module.exports.toogleLike = async (req, res) => {
 
         //get the likable component 
         let likable;
-        let deleted = false;
+        let liked = false;
 
         if (req.body.type == 'post') {
             likable = await Post.findById(req.body.id).populate('likes');
@@ -31,7 +31,7 @@ module.exports.toogleLike = async (req, res) => {
             likable.likesCount--;
             likable.save();
             existingLike.remove();
-            deleted = true;
+          
         } else {
             // create a new like
             let newLike = await Like.create({
@@ -44,9 +44,10 @@ module.exports.toogleLike = async (req, res) => {
             likable.likes.push(newLike._id);
             likable.likesCount++;
             likable.save();
+            liked = true;
         }
         console.log(`toggled a like`);
-        return res.json({ success: true, data: deleted });
+        return res.json({ success: true, data: liked });
 
     } catch (error) {
         console.log(`error in creating like :`, error);
