@@ -15,6 +15,10 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
+    },
+    avatar: {
+        type: String,
+        default: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
     }
 }, {
     timestamps: true

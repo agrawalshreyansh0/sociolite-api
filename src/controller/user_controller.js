@@ -59,6 +59,25 @@ module.exports.validateToken = async (req, res) => {
     return res.json({ success: true }); 
 }
 
+module.exports.updateUser = async (req, res) => {
+    try {
+        const founduser = await User.findById(req.body.id); 
+        if (!founduser) {
+            console.log(`user not found`); 
+            return res.json({ success: false, message: "user not found" }); 
+        }
+        founduser.name = req.body.name; 
+        founduser.email = req.body.email; 
+        founduser.avatar = req.body.avatar; 
+        founduser.save(); 
+        console.log(`user updated : ${req.body.id}`); 
+        return res.json({ success: true, message: "User updated" }); 
+    } catch (error) {
+        console.log(error); 
+        return res.json({ success:false, message})
+    }
+}
+
 //Extras for testing
 module.exports.getUser = async (req, res) => {
     try {
