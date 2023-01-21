@@ -19,7 +19,7 @@ module.exports.getAllPosts = async (req, res) => {
             .populate('user')
             .populate({ path: 'likes', populate: { path: 'user' } })
             .populate({ path: 'comments', populate: { path: 'user' } })
-            .populate({ path: 'comments', populate: { path: 'likes' } })
+            .populate({ path: 'comments', populate: { path: 'likes', populate: { path: 'user' } } })
             .exec();
         console.log(`got all posts`);
         return res.json({ success: true, posts });
