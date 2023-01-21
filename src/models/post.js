@@ -29,7 +29,10 @@ const postsSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'like'
         }
-    ]
+    ], 
+    imageUrl: {
+        type: String, 
+    }
 }, {
     timestamps: true
 })
