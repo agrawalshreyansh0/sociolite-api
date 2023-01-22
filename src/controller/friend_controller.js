@@ -4,10 +4,10 @@ const User = require('../models/user');
 module.exports.sendRequest = async (req, res) => {
     try {
         const user = await User.findById(req.body.recieverId);
-        user.requestRecieved.push(req.body.senderId);
-        user.save();
         const sender = await User.findById(req.body.senderId);
-        sender.requestsSent.push(req.body.recieverId);
+        user.requestRecieved.push(sender._id);
+        sender.requestsSent.push(user._id);
+        user.save();
         sender.save();
         console.log(`request sent from :${sender.email} to ${reciever.email}`);
         return res.json({ success: true, message: "request sent" });
