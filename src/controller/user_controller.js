@@ -47,7 +47,7 @@ module.exports.signIn = async (req, res) => {
 module.exports.getUserData = async (req, res) => {
     try {
         const founduser = await User.findById(req.user)
-            .populate('requestsSent')
+            .populate('friends')
             .populate('requestsRecieved')
             .exec();
         return res.json({ success: true, data: founduser });
