@@ -19,7 +19,27 @@ const userSchema = mongoose.Schema({
     avatar: {
         type: String,
         default: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-    }
+    },
+    friends: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'friendship'
+        }
+    ],
+    requestsSent: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
+        }
+    ],
+    requestsRecieved: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
+        }
+    ], 
+    
+
 }, {
     timestamps: true
 })
