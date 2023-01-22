@@ -10,7 +10,7 @@ module.exports.sendRequest = async (req, res) => {
         sender.requestsSent.push(user._id);
         user.save();
         sender.save();
-        console.log(`request sent from :${sender.email} to ${reciever.email}`);
+        console.log(`request sent from :${sender.email} to ${user.email}`);
         return res.json({ success: true, message: "request sent" });
     } catch (error) {
         console.log(error);
