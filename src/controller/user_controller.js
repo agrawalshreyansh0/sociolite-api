@@ -46,7 +46,10 @@ module.exports.signIn = async (req, res) => {
 
 module.exports.getUserData = async (req, res) => {
     try {
-        const founduser = await User.findById(req.user);
+        const founduser = await User.findById(req.user)
+            .populate('requestsSent')
+            .populate('requestsRecieved')
+            .exec();
         return res.json({ success: true, data: founduser });
     } catch (error) {
         console.log(`error : `, error);
@@ -55,26 +58,26 @@ module.exports.getUserData = async (req, res) => {
 }
 
 module.exports.validateToken = async (req, res) => {
-    console.log("verified"); 
-    return res.json({ success: true }); 
+    console.log("verified");
+    return res.json({ success: true });
 }
 
 module.exports.updateUser = async (req, res) => {
     try {
-        const founduser = await User.findById(req.body.id); 
+        const founduser = await User.findById(req.body.id);
         if (!founduser) {
-            console.log(`user not found`); 
-            return res.json({ success: false, message: "user not found" }); 
+            console.log(`user not found`);
+            return res.json({ success: false, message: "user not found" });
         }
-        founduser.name = req.body.name; 
-        founduser.email = req.body.email; 
-        founduser.avatar = req.body.avatar; 
-        founduser.save(); 
-        console.log(`user updated : ${req.body.id}`); 
-        return res.json({ success: true, message: "User updated" }); 
+        founduser.name = req.body.name;
+        founduser.email = req.body.email;
+        founduser.avatar = req.body.avatar;
+        founduser.save();
+        console.log(`user updated : ${req.body.id}`);
+        return res.json({ success: true, message: "User updated" });
     } catch (error) {
-        console.log(error); 
-        return res.json({ success:false, message})
+        console.log(error);
+        return res.json({ success: false, message })
     }
 }
 
