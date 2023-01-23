@@ -29,7 +29,7 @@ module.exports.signIn = async (req, res) => {
         const user = await User.findOne({ email: req.body.email })
             .populate('friends')
             .populate('requestsRecieved')
-            .exec();;
+            .exec();
         if (!user) {
             console.log(`user not found`);
             return res.json({ success: false, message: `user not found` });

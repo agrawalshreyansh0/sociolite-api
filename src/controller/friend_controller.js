@@ -19,11 +19,15 @@ module.exports.sendRequest = async (req, res) => {
 
 module.exports.acceptRequest = async (req, res) => {
     try {
-        const reciever = await User.findById(req.body.recieverId);
-        const sender = await User.findById(req.body.senderId);
-        reciever.requestsRecieved.pull(req.body.senderId);
+        const reciever = await User.findById(req.body.recieverId)
+            .populate('requestsRecieved')
+            .exec();
+        const sender = await User.findById(req.body.senderId)
+            .populate('requestsSent')
+            .exec();
+        reciever.requestsRecieved.pull(reciever._id);
+        sender.requestsSent.pull(sender._id);
         reciever.friends.push(req.body.senderId);
-        sender.requestsSent.pull(req.body.recieverId);
         sender.friends.push(req.body.recieverId);
         reciever.save();
         sender.save();
