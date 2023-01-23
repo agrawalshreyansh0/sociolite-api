@@ -38,3 +38,23 @@ module.exports.acceptRequest = async (req, res) => {
         return res.json({ success: false, message: "Error Detected" });
     }
 }
+
+module.exports.deleteRequest = async (req, res) => {
+    try {
+        const reciever = await User.findById(req.body.recieverId)
+            .populate('requestsRecieved')
+            .exec();
+        const sender = await User.findById(req.body.senderId)
+            .populate('requestsSent')
+            .exec();
+        reciever.requestsRecieved.pull(sender._id);
+        sender.requestsSent.pull(reciever._id);
+        reciever.save();
+        sender.save();
+        console.log(`friend request deleted by :${reciever.id} from ${sender.id}`);
+        return res.json({ success: true, message: "request deleted" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ success: false, message: "Error Detected" });
+    }
+}
