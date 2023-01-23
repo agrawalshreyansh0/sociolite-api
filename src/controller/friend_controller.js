@@ -25,8 +25,8 @@ module.exports.acceptRequest = async (req, res) => {
         const sender = await User.findById(req.body.senderId)
             .populate('requestsSent')
             .exec();
-        reciever.requestsRecieved.pull(reciever._id);
-        sender.requestsSent.pull(sender._id);
+        reciever.requestsRecieved.pull(sender._id);
+        sender.requestsSent.pull(reciever._id);
         reciever.friends.push(req.body.senderId);
         sender.friends.push(req.body.recieverId);
         reciever.save();
