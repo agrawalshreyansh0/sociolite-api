@@ -26,7 +26,10 @@ module.exports.createUser = async (req, res) => {
 
 module.exports.signIn = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email: req.body.email })
+            .populate('friends')
+            .populate('requestsRecieved')
+            .exec();;
         if (!user) {
             console.log(`user not found`);
             return res.json({ success: false, message: `user not found` });
