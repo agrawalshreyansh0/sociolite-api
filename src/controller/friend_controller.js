@@ -58,3 +58,16 @@ module.exports.deleteRequest = async (req, res) => {
         return res.json({ success: false, message: "Error Detected" });
     }
 }
+
+module.exports.getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.body.id)
+            .populate('friends')
+            .exec();
+        console.log(`user requested`);
+        return res.json({ success: true, data: user });
+    } catch (error) {
+        console.log(error);
+        return res.json({ success: false, message: "Error Detected" });
+    }
+}
