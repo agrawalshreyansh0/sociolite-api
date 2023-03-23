@@ -117,7 +117,12 @@ module.exports.getUser = async (req, res) => {
 
 module.exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({
+      "$or": [
+        { "name": { $regex: req.query.key } },
+        { "email": { $regex: req.query.key } },
+      ],
+    });
     console.log(`All Users`);
     return res.json({ success: true, data: users });
   } catch (error) {
