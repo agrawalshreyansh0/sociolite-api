@@ -117,12 +117,19 @@ module.exports.getUser = async (req, res) => {
 
 module.exports.getAllUsers = async (req, res) => {
   try {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const startIndex = (page - 1) * limit;
     const users = await User.find({
-      "$or": [
-        { "name": { $regex: req.query.key } },
-        { "email": { $regex: req.query.key } },
+      $or: [
+        { name: { $regex: req.query.key } },
+        { email: { $regex: req.query.key } },
       ],
-    });
+    })
+      .sort({ _id: -1 })  
+      .limit(limit)
+      .skip(startIndex)
+      .exec();
     console.log(`All Users`);
     return res.json({ success: true, data: users });
   } catch (error) {
