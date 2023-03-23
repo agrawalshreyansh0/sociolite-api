@@ -12,7 +12,7 @@ module.exports.createUser = async (req, res) => {
             console.log(`${req.body.email}: user already exists`);
             return res.json({ success: false, message: "Account already exists" });
         } else {
-            const password = req.body.password;
+            const password = req.body.password; 
             const hashedPassword = await bcrypt.hash(password, env.bcrypt_salt);
             await User.create({ email: req.body.email, password: hashedPassword, name: req.body.name });
             console.log(`new user created :${req.body.email}`);
@@ -31,7 +31,7 @@ module.exports.signIn = async (req, res) => {
             .populate('requestsRecieved')
             .exec();
         if (!user) {
-            console.log(`user not found`);
+            console.log(`user not found`);  
             return res.json({ success: false, message: `user not found` });
         }
         if (!await bcrypt.compare(req.body.password, user.password)) {
@@ -40,10 +40,10 @@ module.exports.signIn = async (req, res) => {
         }
         console.log(`SignIn Successful :${req.body.email}`);
         return res.json({ success: true, message: "User Successfully logged in", data: { token: jwt.sign({ id: user._id }, env.jwt_key, { expiresIn: env.jwt_expiry }), userdata: user } });
-
+        
     } catch (error) {
         console.log(`error : `, error);
-        return res.json({ success: false, message: `Some Error Detected` });
+        return res.json({ success: false, message: `Some Error Detected` });[]
     }
 }
 
