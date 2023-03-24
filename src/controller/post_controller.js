@@ -1,10 +1,14 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const Like = require("../models/like");
+const User = require("../models/user");
 
 module.exports.createPost = async (req, res) => {
   try {
-    await Post.create(req.body);
+    const post = await Post.create(req.body);
+    const user = await User.findById(req.body.user);
+    user.posts.push(post.id);
+    user.save();
     console.log(`new post created by :${req.body.email}`);
     return res.json({ success: true, message: "Post created" });
   } catch (err) {
@@ -44,6 +48,9 @@ module.exports.destroy = async (req, res) => {
   try {
     const reqpost = await Post.findById(req.params.id);
     await Like.deleteMany({ postId: req.params.id });
+    const user = await User.findById(reqpost.user._id);
+    user.posts.pull(reqpost._id);
+    user.save(); 
     await Comment.deleteMany({ post: req.params.id });
     await reqpost.remove();
     console.log(`Post Delelted with all the comments and likes`);
