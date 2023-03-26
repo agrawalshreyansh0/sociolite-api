@@ -22,9 +22,10 @@ app.use("/posts", require("./routers/post_router"));
 app.use("/comments", require("./routers/comment_router"));
 app.use("/likes", require("./routers/like_router"));
 app.use("/friend", require("./routers/friend_router"));
+app.use("/chatRoom", require("./routers/chatRoom_router"));
 
 app.use("/", (req, res) => {
-  res.json("Hey welcome to Sociolite");
+  res.json(`Hey welcome to Sociolite your ip is ${req.ip} `);
 });
 
 app.listen(env.PORT, "0.0.0.0", () => {
