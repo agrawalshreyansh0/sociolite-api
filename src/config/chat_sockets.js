@@ -15,7 +15,7 @@ module.exports.chatSockets = function (socketServer) {
     });
 
     socket.on("send_message", (data) => {
-      console.log(data); 
+      console.log(data);
       io.in(data.chatroom).emit("recieve_message", data);
     });
   });

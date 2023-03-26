@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const chatServer = require("http").Server(app);
 const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
 chatServer.listen(env.chatPort);
-console.log("chat server is listening on port 5001");
+console.log(`chat server is listening on port ${env.chatPort}`);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
