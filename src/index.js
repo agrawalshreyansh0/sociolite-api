@@ -25,7 +25,7 @@ app.use("/friend", require("./routers/friend_router"));
 app.use("/chatRoom", require("./routers/chatRoom_router"));
 
 app.use("/", (req, res) => {
-  res.json(`Hey welcome to Sociolite your ip is ${req.ip} `);
+  res.json(`Hey welcome to Sociolite`);
 });
 
 app.listen(env.PORT, "0.0.0.0", () => {
